@@ -2,6 +2,10 @@ var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var app = express();
+var multer  = require('multer')
+var cloudinary = require('cloudinary')
+var cloudinaryStorage = require('multer-storage-cloudinary')
+
 
 // You can store key-value pairs in express, here we store the port setting
 app.set('port', (process.env.PORT || 8200));
@@ -12,6 +16,19 @@ app.set('port', (process.env.PORT || 8200));
 app.use(bodyParser.json());
 
 app.use(cors());
+
+/* Config cloudinary for the multer-storage-cloudinary object.
+   Notice that the cloudinary object automatically configures itself
+   based on the Heroku env-variables. */
+var storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: '', // cloudinary folder where you want to store images, empty is root
+  allowedFormats: ['jpg', 'png'],
+});
+
+/* Initialize multer middleware with the multer-storage-cloudinary based
+   storage engine */
+var parser = multer({ storage: storage });
 
 // Home loading
 
@@ -105,7 +122,7 @@ var posts = [
             comments: []
         }
 
-    
+
     ]
 
 //Other users
@@ -238,7 +255,7 @@ var searchUser = function() {
 app.get('/search', function(req,res){
    res.json(searchUser());
 
-    
+
 });
 
 app.get('/posts/relevant', function(req, res) {
@@ -248,7 +265,7 @@ app.get('/posts/relevant', function(req, res) {
 app.get('/posts/:id', function(req, res) {
     res.json(posts[req.params.id]);
 });
-//tag 
+//tag
 app.post('/posts/tag', function(req,res){
 
 
@@ -258,13 +275,13 @@ app.post('/posts/tag', function(req,res){
         return posts.filter(function(post){
             console.log(post.tags);
            if(post.tags.includes(req.body.tags)){
-                
+
             return post;
                 }
                 else{
                     console.log("false");
                 }
-        
+
             // if(post.tags === req.body.tags)
             // {
             //     return post;
@@ -290,29 +307,16 @@ app.get('/posts', function (req, res) {
     res.json ( following() );
 });
 
-// Account Connection
-
-// var getActiveUser = function()
-// {
-//     return activeUsers;
-// }
-
-// app.get('/account', function(req, res){
-//     res.json ( getActiveUser() );
-// })
-
-
-
-
 // End of Home Connection
+
+//Upload Images to server
+app.post('/upload', parser.single('image'), function (req, res) {
+    console.log(req.file);
+    res.json(req.file); // respond with json output of the cloudinary data
+});
+
+//End of Upload Images to server
+
 app.listen(app.get('port'), function() {
         console.log('Node app is running ');
 });
-
-
-
-
-// start listening for incoming HTTP connections
-// app.listen(app.get('port'), function() {
-//     console.log('Node app is running on port', app.get('port'));
-// });
