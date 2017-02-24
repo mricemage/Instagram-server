@@ -258,6 +258,10 @@ app.get('/search', function(req,res){
 
 });
 
+app.post('/search', function(req, res){
+  
+
+});
 app.get('/posts/relevant', function(req, res) {
     res.json(posts);
 });
@@ -268,12 +272,10 @@ app.get('/posts/:id', function(req, res) {
 //tag
 app.post('/posts/tag', function(req,res){
 
-
-
     getpost = function()
     {
         return posts.filter(function(post){
-            console.log(post.tags);
+            console.log('posts.tag' + req.body.tags);
            if(post.tags.includes(req.body.tags)){
 
             return post;
