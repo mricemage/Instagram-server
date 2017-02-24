@@ -316,7 +316,7 @@ app.get('/posts', function (req, res) {
 // End of Home Connection
 
 //Upload Images to server
-app.post('/upload', parser.single('image'), function (req, res) {
+app.post('/upload', parser.single('imageUri'), function (req, res) {
     console.log(req.file);
     res.json(req.file); // respond with json output of the cloudinary data
 });
