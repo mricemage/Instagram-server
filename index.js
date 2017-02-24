@@ -17,6 +17,10 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+/* Config html directory to serve static HTML files.
+   Pages are accessed with /static URL. */
+app.use('/static', express.static('html'))
+
 /* Config cloudinary for the multer-storage-cloudinary object.
    Notice that the cloudinary object automatically configures itself
    based on the Heroku env-variables. */
@@ -259,7 +263,7 @@ app.get('/search', function(req,res){
 });
 
 app.post('/search', function(req, res){
-  
+
 
 });
 app.get('/posts/relevant', function(req, res) {
