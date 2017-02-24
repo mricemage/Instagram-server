@@ -50,7 +50,7 @@ var posts = [
             imageThumbnail: "http://www.students.oamk.fi/~t5homi00/images/jason1.jpg",
             likes: 892,
             caption: "Prepare for my new movies!",
-            tags:  ["#thang"],
+            tags:  ["#thang", "#actor"],
 
             comments: [
                 {
@@ -90,7 +90,7 @@ var posts = [
             likes: 10100,
             caption: "Are you ready for Split? ",
             userRefs: [],
-            tags: ["#moe", "#milk"],
+            tags: ["#moe", "#milk", "#actor"],
             comments: []
         },
          {
