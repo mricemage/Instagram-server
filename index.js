@@ -255,15 +255,31 @@ app.post('/login', function(req,res){
 
 var searchUser = function() {
     return otherUsers;
+
 }
 app.get('/search', function(req,res){
    res.json(searchUser());
-
-
 });
 
 app.post('/search', function(req, res){
+  getpost = function()
+  {
+      return posts.filter(function(post){
+          console.log('posts' + req.body.username);
+         if(post.user.username.includes(req.body.username)){
 
+          return post;
+              }
+              else{
+                  console.log("false");
+              }
+
+
+
+        })
+  }
+
+  res.json( getpost() );
 
 });
 app.get('/posts/relevant', function(req, res) {
@@ -288,14 +304,8 @@ app.post('/posts/tag', function(req,res){
                     console.log("false");
                 }
 
-            // if(post.tags === req.body.tags)
-            // {
-            //     return post;
-            // }
-            // check does this post contain the searched tag
 
-            // if yes return true
-            // if no return false
+
           })
   }
 
